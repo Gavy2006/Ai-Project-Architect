@@ -43,49 +43,7 @@ Generate an organized folder structure including:
 
 ---
 
-## 🛠️ Tech Stack Suggestions
 
-AI will recommend technologies based on project requirements.
-
-Examples include:
-- Kotlin
-- Jetpack Compose
-- Firebase
-- Room Database
-- Retrofit
-- Ktor
-- Spring Boot
-- Node.js
-- Django
-- MongoDB
-- PostgreSQL
-- TensorFlow Lite
-- Gemini API
-- OpenAI API
-
----
-
-## 🗄️ Database Design
-
-Generate:
-- Entity relationships
-- Database schema
-- SQL tables
-- Firestore collections
-- Room entities
-
----
-
-## 🔌 API Recommendations
-
-Suggest:
-- Required REST APIs
-- Backend endpoints
-- Request & response models
-- Authentication flow
-- API architecture
-
----
 
 ## 📋 Development Roadmap
 
@@ -171,7 +129,7 @@ Planned AI stack:
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 ### Android
 - Kotlin
@@ -182,14 +140,36 @@ Planned AI stack:
 
 ### Backend (Planned)
 - Firebase
-- Spring Boot / Node.js
+- Firebase Authentication
+- Firestore
 
 ### AI
-- Gemini API
-- OpenAI API
 - Python
+- LLMs
+- RAG (Retrieval-Augmented Generation)
 - LangChain
 - Vector Database
+- Gemini API
+
+## 🗄️ Database Design
+
+Generate:
+- Entity relationships
+- Database schema
+- SQL tables
+- Firestore collections
+- Room entities
+
+---
+
+## 🔌 API Recommendations
+
+Suggest:
+- Required REST APIs
+- Backend endpoints
+- Request & response models
+- Authentication flow
+- API architecture
 
 ---
 
@@ -204,6 +184,8 @@ Planned AI stack:
 - ✅ Basic project structure
 
 ---
+
+
 
 # 🎯 Vision
 
