@@ -11,10 +11,7 @@ import androidx.compose.runtime.Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TopBar() {
-
-
-
-            TopAppBar(
+      TopAppBar(
                 title = {
                     Text(text = "AI Project Architect")
                 }

@@ -14,29 +14,49 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 
 @Composable
-fun BottomBar() {
+fun BottomBar(navController: NavController) {
 
     NavigationBar {
 
         NavigationBarItem(
             selected = false,
             onClick = {
-
+                navController.navigate("home") {
+                    launchSingleTop = true
+                }
             },
             icon = {
-                Icon(Icons.Default.Home, contentDescription = "create")
+                Icon(Icons.Default.Home, contentDescription = "home")
             },
             label = {
-                Text("new project")
+                Text("home")
             }
         )
 
         NavigationBarItem(
             selected = false,
             onClick = {
+                navController.navigate("create"){
+                    launchSingleTop = true
+                }
+            },
+            icon = {
+                Icon(Icons.Default.Home, contentDescription = "create")
+            },
+            label = {
+                Text(" create")
+            }
+        )
 
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                navController.navigate("history"){
+                    launchSingleTop = true
+                }
             },
             icon = {
                 Icon(Icons.Default.CheckCircle, contentDescription = "history")
@@ -49,7 +69,9 @@ fun BottomBar() {
         NavigationBarItem(
             selected = false,
             onClick = {
-
+                navController.navigate("profile"){
+                    launchSingleTop = true
+                }
             },
             icon = {
                 Icon(Icons.Default.Person, contentDescription = "profile")

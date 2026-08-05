@@ -15,6 +15,7 @@ import kotlin.math.sign
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.padding
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.aiprojectarchitect.Screen.BottomBar
 import com.example.aiprojectarchitect.Screen.TopBar
 
@@ -22,17 +23,23 @@ import com.example.aiprojectarchitect.Screen.TopBar
 fun navigation() {
 
     val navController = rememberNavController()
+    val currentRoute =
+        navController.currentBackStackEntryAsState().value?.destination?.route
+
 
     Scaffold(
 
         topBar = {
+            if (currentRoute !in listOf ("splash", "login", "signup")) {
             TopBar()
-        },
+         }
+        } ,
 
         bottomBar = {
-            BottomBar()
+            if (currentRoute !in listOf("splash", "login", "signup")) {
+                BottomBar(navController)
+            }
         }
-
     ) { padding ->
 
         NavHost(
@@ -42,15 +49,15 @@ fun navigation() {
         ) {
 
             composable("splash") {
-                splash()
+                splash(navController)
             }
 
             composable("signup") {
-                signup()
+                signup(navController)
             }
 
             composable("login") {
-                login()
+                login(navController)
             }
 
             composable("home") {
