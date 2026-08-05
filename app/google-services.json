@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285877111662",
+    "project_id": "ai-project-architect-2cf6c",
+    "storage_bucket": "ai-project-architect-2cf6c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285877111662:android:609f0ee2877a55aceccf7f",
+        "android_client_info": {
+          "package_name": "com.example.aiprojectarchitect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVk5X7T8JBIWU3_V_rmaBXwCDXhu5rSZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
