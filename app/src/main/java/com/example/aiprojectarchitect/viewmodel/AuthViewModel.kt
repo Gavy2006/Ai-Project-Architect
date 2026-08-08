@@ -1,8 +1,10 @@
 package com.example.aiprojectarchitect.viewmodel
 
+import FirestoreManager
 import androidx.lifecycle.ViewModel
 import com.example.aiprojectarchitect.firebase.FirebaseAuthManager
 import com.example.aiprojectarchitect.repository.AuthRepository
+import com.example.aiprojectarchitect.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -10,6 +12,9 @@ class AuthViewModel : ViewModel() {
 
     private val repository =
         AuthRepository(FirebaseAuthManager())
+
+    private val userRepository =
+        UserRepository(FirestoreManager())
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -24,7 +29,7 @@ class AuthViewModel : ViewModel() {
     fun signUp(
         email: String,
         password: String,
-        onSuccess: () -> Unit
+        onSuccess: (String) -> Unit
     ) {
 
         _isLoading.value = true
@@ -34,9 +39,22 @@ class AuthViewModel : ViewModel() {
             email = email,
             password = password,
 
-            onSuccess = {
-                _isLoading.value = false
-                onSuccess()
+            onSuccess = { uid ->
+
+                userRepository.saveUser(
+                    uid = uid,
+                    email = email,
+
+                    onSuccess = {
+                        _isLoading.value = false
+                        onSuccess(uid)
+                    },
+
+                    onFailure = { message ->
+                        _isLoading.value = false
+                        _error.value = message
+                    }
+                )
             },
 
             onFailure = { message ->

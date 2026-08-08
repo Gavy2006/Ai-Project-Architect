@@ -9,7 +9,7 @@ class AuthRepository(
     fun signUp(
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit
     ) {
 

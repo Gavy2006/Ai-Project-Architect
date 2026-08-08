@@ -12,13 +12,21 @@ class FirebaseAuthManager {
     fun signUp(
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (String) -> Unit,
         onError: (String) -> Unit
     ) {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                onSuccess()
+
+                val uid = auth.currentUser?.uid
+
+                if(uid != null){
+                    onSuccess(uid)
+                }
+                else{
+                    onError("User ID not found")
+                }
             }
             .addOnFailureListener { exception ->
                 onError(exception.message ?: "SignUp Failed")
