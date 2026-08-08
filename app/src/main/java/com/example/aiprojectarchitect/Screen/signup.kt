@@ -14,6 +14,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,7 +26,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.aiprojectarchitect.viewmodel.AuthViewModel
 @Composable
 fun signup(navController: NavController){
 
@@ -34,6 +36,12 @@ fun signup(navController: NavController){
     var password by remember{ mutableStateOf("") }
 
     var passwordVisible by remember { mutableStateOf(false) }
+
+    val authViewModel: AuthViewModel = viewModel()
+
+    val error by authViewModel.error.collectAsState()
+
+    val isLoading by authViewModel.isLoading.collectAsState()
     Column(modifier = Modifier.fillMaxSize() ,
         verticalArrangement = Arrangement.Center ,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -80,13 +88,30 @@ fun signup(navController: NavController){
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        Button(onClick = {navController.navigate("home"){
-            popUpTo("signup"){
-                inclusive = true
-            }
-        } }) {
+        Button(
+            onClick = {
+                authViewModel.signUp(
+                    email,
+                    password,
+                    onSuccess = {
+                        navController.navigate("home")
+                    }
+                )
+            },
+            enabled = !isLoading
+        ) {
+            Text(
+                if (isLoading) "Creating Account..."
+                else "SignUp"
+            )
+        }
 
-            Text("LogIn")
+        if (error != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = error!!
+            )
         }
 
         Spacer(modifier = Modifier.height(11.dp))

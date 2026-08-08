@@ -44,7 +44,6 @@ dependencies {
 
     val nav_version = "2.9.8"
 
-    // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation(platform("com.google.firebase:firebase-bom:34.2.0"))

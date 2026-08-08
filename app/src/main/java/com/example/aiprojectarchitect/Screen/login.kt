@@ -1,5 +1,7 @@
 package com.example.aiprojectarchitect.Screen
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.aiprojectarchitect.viewmodel.AuthViewModel
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.material.icons.Icons
 
@@ -38,6 +40,12 @@ fun login(navController: NavController){
      var email by remember{ mutableStateOf("")}
 
      var password by remember{ mutableStateOf("")}
+
+    val authViewModel: AuthViewModel = viewModel()
+
+    val error by authViewModel.error.collectAsState()
+
+    val isLoading by authViewModel.isLoading.collectAsState()
 
     var passwordVisible by remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize() ,
@@ -86,13 +94,30 @@ fun login(navController: NavController){
 
         Spacer(modifier = Modifier.height(13.dp))
 
-        Button(onClick = {navController.navigate("home"){
-            popUpTo("login"){
-                inclusive = true
-            }
-        } }) {
+        Button(
+            onClick = {
+                authViewModel.login(
+                    email = email,
+                    password = password,
+                    onSuccess = {
+                        navController.navigate("home")
+                    }
+                )
+            },
+            enabled = !isLoading
+        ) {
+            Text(
+                if (isLoading) "Logging in..."
+                else "LogIn"
+            )
+        }
 
-            Text("LogIn")
+        if (error != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = error!!
+            )
         }
 
         Spacer(modifier = Modifier.height(11.dp))
