@@ -1,3 +1,5 @@
+package com.example.aiprojectarchitect.firebase
+import com.example.aiprojectarchitect.model.Project
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FirestoreManager{
@@ -19,11 +21,41 @@ class FirestoreManager{
         firestore.collection("users")
             .document(uid)
             .set(user)
-            .addOnCompleteListener {
+            .addOnSuccessListener {
                 onSuccess()
             }
             .addOnFailureListener { expectation ->
                 onError(expectation.message ?: "Failed to Save User")
             }
+    }
+
+
+    fun saveProject(
+        project : Project ,
+        onSuccess  : () ->Unit ,
+        onError  : (String) ->Unit
+    ){
+
+        val projectId = firestore
+            .collection("projects")
+            .document()
+            .id
+
+        val projectWithId = project.copy(
+            id = projectId
+        )
+
+        firestore.collection("projects")
+            .document(projectId)
+            .set(projectWithId)
+            .addOnSuccessListener{
+                onSuccess()
+            }
+            .addOnFailureListener { exception ->
+                onError(
+                    exception.message ?: "Failed to save project"
+                )
+            }
+
     }
 }
