@@ -1,6 +1,6 @@
 package com.example.aiprojectarchitect.repository
 
-import FirestoreManager
+import com.example.aiprojectarchitect.firebase.FirestoreManager
 
 class UserRepository(
     private val firestoreManager: FirestoreManager

@@ -2,21 +2,19 @@ package com.example.aiprojectarchitect.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Icon
-import androidx.compose.ui.res.painterResource
 
 val RecentProjectList = listOf(
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "AI Chatbot",
         "A chatbot using Gemini API"
     ),
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "Expense Tracker",
         "Track daily expenses"
     ),
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "Weather App",
         "Shows live weather updates"

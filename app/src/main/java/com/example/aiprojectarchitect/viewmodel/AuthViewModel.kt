@@ -1,8 +1,8 @@
 package com.example.aiprojectarchitect.viewmodel
 
-import FirestoreManager
-import androidx.lifecycle.ViewModel
 import com.example.aiprojectarchitect.firebase.FirebaseAuthManager
+import com.example.aiprojectarchitect.firebase.FirestoreManager
+import androidx.lifecycle.ViewModel
 import com.example.aiprojectarchitect.repository.AuthRepository
 import com.example.aiprojectarchitect.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow

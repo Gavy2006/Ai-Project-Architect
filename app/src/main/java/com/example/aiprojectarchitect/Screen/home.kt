@@ -1,6 +1,6 @@
 package com.example.aiprojectarchitect.Screen
 
-import android.graphics.drawable.Icon
+import com.example.aiprojectarchitect.components.ProjectCardData
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,19 +16,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,15 +34,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.aiprojectarchitect.components.Project
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.aiprojectarchitect.components.QuickTemplateList
 import com.example.aiprojectarchitect.components.RecentProjectList
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import com.example.aiprojectarchitect.viewmodel.ProjectViewModel
+
 
 @Composable
 fun home() {
@@ -144,86 +139,6 @@ fun Header() {
 }
 
 
-@Composable
-fun PromptSection() {
-
-    var prompt by remember {
-        mutableStateOf("")
-    }
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-
-        Text(
-            text = "Project Idea",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Tell AI what you want to build.",
-            color = Color.Gray,
-            fontSize = 14.sp
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = prompt,
-            onValueChange = {
-                prompt = it
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(170.dp),
-            placeholder = {
-                Text(
-                    "Example:\nBuild an AI powered Food Delivery App with Firebase, Razorpay and Admin Panel."
-                )
-            },
-            shape = RoundedCornerShape(18.dp),
-            maxLines = 8
-        )
-
-        Spacer(modifier = Modifier.height(18.dp))
-
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(58.dp),
-            shape = RoundedCornerShape(18.dp) ,
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 6.dp
-            )
-        ) {
-
-            Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = null
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = "Generate Architecture",
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(
-            text = "⚡ Powered by Gemini + Firebase + RAG",
-            fontSize = 12.sp,
-            color = Color.Gray,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-    }
-}
 
 
 @Composable
@@ -279,7 +194,7 @@ fun bottom() {
 
 
 @Composable
-fun ProjectCard(project: Project) {
+fun ProjectCard(project: ProjectCardData) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -357,7 +272,7 @@ fun ProjectCard(project: Project) {
 }
 
 @Composable
-fun QuickTemplateCard(project: Project) {
+fun QuickTemplateCard(project: ProjectCardData) {
 
     Card(
         modifier = Modifier
@@ -400,5 +315,36 @@ fun QuickTemplateCard(project: Project) {
                 fontWeight = FontWeight.SemiBold
             )
         }
+    }
+}
+
+@Composable
+fun PromptSection() {
+
+    var prompt by remember {
+        mutableStateOf("")
+    }
+
+    val projectViewModel: ProjectViewModel = viewModel()
+
+    Button(
+        onClick = {
+
+            projectViewModel.saveProject(
+                project = com.example.aiprojectarchitect.model.Project(
+                    userId = "",
+                    prompt = prompt,
+                    title = "New Project",
+                    aiResponse = "",
+                    createdAt = System.currentTimeMillis()
+                ),
+
+                onSuccess = {
+
+                }
+            )
+        }
+    ) {
+        Text("Generate Architecture")
     }
 }

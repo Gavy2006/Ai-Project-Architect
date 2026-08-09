@@ -1,7 +1,7 @@
 package com.example.aiprojectarchitect.firebase
 
 import com.google.firebase.auth.FirebaseAuth
-
+import com.example.aiprojectarchitect.firebase.FirestoreManager
 class FirebaseAuthManager {
 
     private val auth = FirebaseAuth.getInstance()

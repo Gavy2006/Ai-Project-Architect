@@ -1,7 +1,7 @@
 package com.example.aiprojectarchitect.firebase
 import com.example.aiprojectarchitect.model.Project
 import com.google.firebase.firestore.FirebaseFirestore
-
+import com.example.aiprojectarchitect.firebase.FirestoreManager
 class FirestoreManager{
 
     private val firestore = FirebaseFirestore.getInstance()

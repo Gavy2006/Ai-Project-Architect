@@ -4,17 +4,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 
 val QuickTemplateList = listOf(
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "AI Chatbot",
         "A chatbot using Gemini API"
     ),
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "Expense Tracker",
         "Track daily expenses"
     ),
-    Project(
+    ProjectCardData(
         Icons.Default.Person,
         "Weather App",
         "Shows live weather updates"
