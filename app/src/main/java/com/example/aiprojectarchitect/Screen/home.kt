@@ -25,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,13 +39,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.aiprojectarchitect.components.QuickTemplateList
 import com.example.aiprojectarchitect.components.RecentProjectList
 import com.example.aiprojectarchitect.viewmodel.ProjectViewModel
 
 
 @Composable
-fun home() {
+fun home(navController: NavController) {
 
     LazyColumn(
         modifier = Modifier
@@ -57,7 +59,7 @@ fun home() {
         }
 
         item {
-            PromptSection()
+            PromptSection(navController)
         }
 
         item {
@@ -318,8 +320,11 @@ fun QuickTemplateCard(project: ProjectCardData) {
     }
 }
 
+
 @Composable
-fun PromptSection() {
+fun PromptSection(
+    navController: NavController
+) {
 
     var prompt by remember {
         mutableStateOf("")
@@ -327,24 +332,80 @@ fun PromptSection() {
 
     val projectViewModel: ProjectViewModel = viewModel()
 
-    Button(
-        onClick = {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
 
-            projectViewModel.saveProject(
-                project = com.example.aiprojectarchitect.model.Project(
-                    userId = "",
+        Text(
+            text = "Describe Your Project",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(
+            modifier = Modifier.height(12.dp)
+        )
+
+        OutlinedTextField(
+            value = prompt,
+
+            onValueChange = {
+                prompt = it
+            },
+
+            modifier = Modifier.fillMaxWidth(),
+
+            placeholder = {
+                Text(
+                    "Describe your project idea..."
+                )
+            },
+
+            minLines = 5,
+            maxLines = 8
+        )
+
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
+
+        Button(
+            onClick = {
+
+                projectViewModel.generateArchitecture(
                     prompt = prompt,
-                    title = "New Project",
-                    aiResponse = "",
-                    createdAt = System.currentTimeMillis()
-                ),
 
-                onSuccess = {
+                    onSuccess = { response ->
 
-                }
+                        projectViewModel.saveProject(
+                            project = com.example.aiprojectarchitect.model.Project(
+                                userId = "",
+                                prompt = prompt,
+                                title = "New Project",
+                                aiResponse = response,
+                                createdAt = System.currentTimeMillis()
+                            ),
+
+                            onSuccess = {
+
+                                // Gemini response successfully generated
+                                // and project saved.
+
+                                navController.navigate("create")
+                            }
+                        )
+                    }
+                )
+            },
+
+            modifier = Modifier.fillMaxWidth(),
+
+            enabled = prompt.isNotBlank()
+        ) {
+
+            Text(
+                text = "Generate Architecture"
             )
         }
-    ) {
-        Text("Generate Architecture")
     }
 }
