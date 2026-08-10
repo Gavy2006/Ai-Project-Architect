@@ -25,6 +25,12 @@ class ProjectViewModel : ViewModel() {
     val error: StateFlow<String?> = _error
 
 
+    private val _generatedResponse = MutableStateFlow<String?>(null)
+    val generatedResponse: StateFlow<String?> = _generatedResponse
+
+    private val _currentPrompt = MutableStateFlow("")
+    val currentPrompt: StateFlow<String> = _currentPrompt
+
     fun saveProject(
         project: Project,
         onSuccess: () -> Unit
@@ -72,6 +78,9 @@ class ProjectViewModel : ViewModel() {
                     generate.generateArchitecture(architecturePrompt)
 
                 println("GEMINI RESPONSE: $response")
+
+                _currentPrompt.value = prompt
+                _generatedResponse.value = response
 
                 _isLoading.value = false
                 onSuccess(response)
