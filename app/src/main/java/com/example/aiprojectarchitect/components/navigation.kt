@@ -1,6 +1,8 @@
+
 package com.example.aiprojectarchitect.components
 
-
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.aiprojectarchitect.viewmodel.ProjectViewModel
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -22,10 +24,14 @@ import com.example.aiprojectarchitect.Screen.splash
 @Composable
 fun navigation() {
 
-    val navController = rememberNavController()
-    val currentRoute =
-        navController.currentBackStackEntryAsState().value?.destination?.route
 
+
+        val navController = rememberNavController()
+
+        val projectViewModel: ProjectViewModel = viewModel()
+
+        val currentRoute =
+            navController.currentBackStackEntryAsState().value?.destination?.route
 
     Scaffold(
 
@@ -61,11 +67,14 @@ fun navigation() {
             }
 
             composable("home") {
-                home()
+                home(
+                    navController = navController,
+                    projectViewModel = projectViewModel
+                )
             }
 
             composable("create") {
-                create()
+                create(projectViewModel)
             }
 
             composable("history") {
@@ -78,3 +87,4 @@ fun navigation() {
         }
     }
 }
+

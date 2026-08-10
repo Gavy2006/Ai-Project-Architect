@@ -46,20 +46,26 @@ import com.example.aiprojectarchitect.viewmodel.ProjectViewModel
 
 
 @Composable
-fun home(navController: NavController) {
+fun home(
+    navController: NavController,
+    projectViewModel: ProjectViewModel
+) {
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
-    ){
+    ) {
 
         item {
             Header()
         }
 
         item {
-            PromptSection(navController)
+            PromptSection(
+                navController = navController,
+                projectViewModel = projectViewModel
+            )
         }
 
         item {
@@ -67,7 +73,6 @@ fun home(navController: NavController) {
         }
     }
 }
-
 
 @Composable
 fun Header() {
@@ -323,14 +328,13 @@ fun QuickTemplateCard(project: ProjectCardData) {
 
 @Composable
 fun PromptSection(
-    navController: NavController
+    navController: NavController,
+    projectViewModel: ProjectViewModel
 ) {
 
     var prompt by remember {
         mutableStateOf("")
     }
-
-    val projectViewModel: ProjectViewModel = viewModel()
 
     Column(
         modifier = Modifier.fillMaxWidth()
